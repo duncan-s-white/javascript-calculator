@@ -40,9 +40,6 @@ function App() {
       case "*":
       case "/":
         if (state.display.length >= limit) return state;
-
-        //check if the last
-
         if (action.type === "-") {
           //if symbol is '-' append the new operator ('-')
           //check to see if the last 2 digits are operators in which case  do not add any more minus signs
@@ -57,7 +54,7 @@ function App() {
           updatedDisplay = state.display + action.type;
         } else {
           //loop through from the end of the string removing any operators before adding the new operator
-          for (let i = len - 1; (i) => 0; i--) {
+          for (let i = len - 1; i >= 0; i--) {
             if (operators.includes(state.display[i])) {
               updatedDisplay = updatedDisplay.slice(0, -1);
               console.log(updatedDisplay);
