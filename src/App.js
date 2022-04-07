@@ -15,8 +15,9 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function reducer(state, action) {
-    let updatedDisplay = state.display;
-    let len = state.display.length;
+    const { display, record } = state;
+    let updatedDisplay = display;
+    let len = display.length;
 
     switch (action.type) {
       case "clear":
@@ -32,30 +33,39 @@ function App() {
       case "8":
       case "9":
         if (len >= limit) return state;
-        updatedDisplay =
-          (state.display !== "0" ? state.display : "") + action.type;
+        if (display === "0") {
+          updatedDisplay = action.type;
+        } else if (
+          display.charAt(display.length - 1) === "0" &&
+          operators.includes(display.charAt(display.length - 2))
+        ) {
+          updatedDisplay =
+            display.substring(0, display.length - 1) + action.type;
+        } else {
+          updatedDisplay = display + action.type;
+        }
         break;
       case "+":
       case "-":
       case "*":
       case "/":
-        if (state.display.length >= limit) return state;
+        if (display.length >= limit) return state;
         if (action.type === "-") {
           //if symbol is '-' append the new operator ('-')
           //check to see if the last 2 digits are operators in which case  do not add any more minus signs
           if (
-            !operators.includes(state.display[len - 1]) ||
-            !operators.includes(state.display[len - 2])
+            !operators.includes(display[len - 1]) ||
+            !operators.includes(display[len - 2])
           ) {
-            updatedDisplay = state.display + action.type;
+            updatedDisplay = display + action.type;
           }
-        } else if (!operators.includes(state.display[len - 1])) {
+        } else if (!operators.includes(display[len - 1])) {
           //else if lastChar is not a operator then append the new operator
-          updatedDisplay = state.display + action.type;
+          updatedDisplay = display + action.type;
         } else {
           //loop through from the end of the string removing any operators before adding the new operator
           for (let i = len - 1; i >= 0; i--) {
-            if (operators.includes(state.display[i])) {
+            if (operators.includes(display[i])) {
               updatedDisplay = updatedDisplay.slice(0, -1);
               console.log(updatedDisplay);
             } else break;
@@ -68,21 +78,23 @@ function App() {
         let appendDecimal = true; //set to true but check if the currentNumber already has a decimal and if so set to false
         let lastOperatorPos = -1;
         for (let operator of operators) {
-          let symPos = state.display.lastIndexOf(operator);
+          let symPos = display.lastIndexOf(operator);
           if (symPos > lastOperatorPos) lastOperatorPos = symPos;
         }
-        let currentNumber = state.display;
+        let currentNumber = display;
         if (lastOperatorPos !== -1)
-          currentNumber = state.display.slice(lastOperatorPos + 1);
+          currentNumber = display.slice(lastOperatorPos + 1);
         if (currentNumber.includes(".")) appendDecimal = false;
-        if (state.display.length >= limit) return state;
-        if (appendDecimal) updatedDisplay = state.display + ".";
+        if (display.length >= limit) return state;
+        if (appendDecimal) updatedDisplay = display + ".";
         break;
       case "=":
-        updatedDisplay = Math.round(eval(updatedDisplay) * 100000) / 100000;
-        let updatedRecord = [state.display + " = " + updatedDisplay];
+        updatedDisplay =
+          Math.round(eval(updatedDisplay.replace("--", "- -")) * 100000) /
+          100000;
+        let updatedRecord = [display + " = " + updatedDisplay];
         return {
-          record: [updatedRecord, ...state.record],
+          record: [updatedRecord, ...record],
           display: updatedDisplay.toString(),
         };
       default:
