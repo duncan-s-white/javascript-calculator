@@ -3,6 +3,7 @@ import "./index.css";
 import Display from "./components/Display.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFreeCodeCamp } from "@fortawesome/free-brands-svg-icons";
+import Button from "./components/Button";
 
 function App() {
   const initialState = {
@@ -98,128 +99,26 @@ function App() {
       <div id="calculator">
         <Display content={state.display} />
         <div id="button-container">
-          <div
-            className="button"
-            id="seven"
-            onClick={() => dispatch({ type: "7" })}
-          >
-            7
-          </div>
-          <div
-            className="button"
-            id="eight"
-            onClick={() => dispatch({ type: "8" })}
-          >
-            8
-          </div>
-          <div
-            className="button"
-            id="nine"
-            onClick={() => dispatch({ type: "9" })}
-          >
-            9
-          </div>
-          <div
-            className="button"
-            id="add"
-            onClick={() => dispatch({ type: "+" })}
-          >
-            +
-          </div>
-          <div
-            className="button"
-            id="clear"
-            onClick={() => dispatch({ type: "clear" })}
-          >
-            C
-          </div>
-          <div
-            className="button"
-            id="four"
-            onClick={() => dispatch({ type: "4" })}
-          >
-            4
-          </div>
-          <div
-            className="button"
-            id="five"
-            onClick={() => dispatch({ type: "5" })}
-          >
-            5
-          </div>
-          <div
-            className="button"
-            id="six"
-            onClick={() => dispatch({ type: "6" })}
-          >
-            6
-          </div>
-          <div
-            className="button"
-            id="subtract"
-            onClick={() => dispatch({ type: "-" })}
-          >
-            -
-          </div>
-          <div
-            className="button"
-            id="one"
-            onClick={() => dispatch({ type: "1" })}
-          >
-            1
-          </div>
-          <div
-            className="button"
-            id="two"
-            onClick={() => dispatch({ type: "2" })}
-          >
-            2
-          </div>
-          <div
-            className="button"
-            id="three"
-            onClick={() => dispatch({ type: "3" })}
-          >
-            3
-          </div>
-          <div
-            className="button"
-            id="multiply"
-            onClick={() => dispatch({ type: "*" })}
-          >
-            *
-          </div>
-          <div
-            className="button"
-            id="equals"
-            onClick={() => dispatch({ type: "=" })}
-          >
-            =
-          </div>
-          <div
-            className="button"
-            id="zero"
-            onClick={() => dispatch({ type: "0" })}
-          >
-            0
-          </div>
-          <div
-            className="button"
-            id="decimal"
-            onClick={() => dispatch({ type: "." })}
-          >
-            .
-          </div>
+          <Button id="seven" type="7" dispatch={dispatch} />
+          <Button id="eight" type="8" dispatch={dispatch} />
+          <Button id="nine" type="9" dispatch={dispatch} />
+          <Button id="add" type="+" dispatch={dispatch} />
+          <Button id="clear" type="clear" content="C" dispatch={dispatch} />
+          <Button id="four" type="4" dispatch={dispatch} />
+          <Button id="five" type="5" dispatch={dispatch} />
+          <Button id="six" type="6" dispatch={dispatch} />
+          <Button id="subtract" type="-" dispatch={dispatch} />
+          <Button id="one" type="1" dispatch={dispatch} />
+          <Button id="two" type="2" dispatch={dispatch} />
+          <Button id="three" type="3" dispatch={dispatch} />
+          <Button id="multiply" type="*" dispatch={dispatch} />
+          <Button id="equals" type="=" dispatch={dispatch} />
+          <Button id="zero" type="0" dispatch={dispatch} />
+          <Button id="decimal" type="." dispatch={dispatch} />
           <div className="blank">
             <FontAwesomeIcon icon={faFreeCodeCamp} />
           </div>
-          <div
-            className="button"
-            id="divide"
-            onClick={() => dispatch({ type: "/" })}
-          >
-            /
-          </div>
+          <Button id="divide" type="/" dispatch={dispatch} />
         </div>
       </div>
       <div id="results">

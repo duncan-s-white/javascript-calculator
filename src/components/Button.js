@@ -1,8 +1,8 @@
-
-function Button(props){
+function Button({ id, type, dispatch, content }) {
+  if (!content) content = type;
   return (
-    <div className="button" id={props.name}>
-    {props.content}
+    <div className="button" id={id} onClick={() => dispatch({ type: type })}>
+      {content}
     </div>
   );
 }
