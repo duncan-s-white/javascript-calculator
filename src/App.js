@@ -33,14 +33,18 @@ function App() {
       case "8":
       case "9":
         if (len >= limit) return state;
-        if (display === "0") {
+        if (
+          display === "0" ||
+          display === "Error!" ||
+          display === "NaN" ||
+          display === "Infinity"
+        ) {
           updatedDisplay = action.type;
         } else if (
-          display.charAt(display.length - 1) === "0" &&
-          operators.includes(display.charAt(display.length - 2))
+          display.charAt(len - 1) === "0" &&
+          operators.includes(display.charAt(len - 2))
         ) {
-          updatedDisplay =
-            display.substring(0, display.length - 1) + action.type;
+          updatedDisplay = display.substring(0, len - 1) + action.type;
         } else {
           updatedDisplay = display + action.type;
         }
@@ -49,7 +53,7 @@ function App() {
       case "-":
       case "*":
       case "/":
-        if (display.length >= limit) return state;
+        if (len >= limit) return state;
         if (action.type === "-") {
           //if symbol is '-' append the new operator ('-')
           //check to see if the last 2 digits are operators in which case  do not add any more minus signs
@@ -85,13 +89,17 @@ function App() {
         if (lastOperatorPos !== -1)
           currentNumber = display.slice(lastOperatorPos + 1);
         if (currentNumber.includes(".")) appendDecimal = false;
-        if (display.length >= limit) return state;
+        if (len >= limit) return state;
         if (appendDecimal) updatedDisplay = display + ".";
         break;
       case "=":
-        updatedDisplay =
-          Math.round(eval(updatedDisplay.replace("--", "- -")) * 100000) /
-          100000;
+        try {
+          updatedDisplay =
+            Math.round(eval(updatedDisplay.replace("--", "- -")) * 100000) /
+            100000;
+        } catch (e) {
+          updatedDisplay = "Error!";
+        }
         let updatedRecord = [display + " = " + updatedDisplay];
         return {
           record: [updatedRecord, ...record],
