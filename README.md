@@ -13,7 +13,12 @@ Some dependencies used:
 
 ## How to run locally
 
-Clone the project to your machine. In the project directory, run the command:
+Clone the project to your machine. Then in the project directory, to install dependencies, run the command:
+
+`npm install`
+
+Then to run the app in development mode, run the command:
 
 `npm start`
 
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
